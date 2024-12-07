@@ -97,3 +97,13 @@ app.post('/verify-otp', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
+setInterval(() => {
+    axios.get(`http://localhost:${port}`)
+        .then(response => {
+            console.log("Keep-alive ping successful!");
+        })
+        .catch(error => {
+            console.log("Error during keep-alive ping:", error);
+        });
+}, 300000);
