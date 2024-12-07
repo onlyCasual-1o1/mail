@@ -87,7 +87,7 @@ app.post('/verify-otp', (req, res) => {
 
     // Check if the entered OTP is correct
     if (enteredOtp === currentOtp) {
-        res.send('<h2>OTP Verified Successfully!</h2>');
+        res.redirect('https://cs-devops.com/DocCares/welcome.html');
     } else {
         res.sendFile(__dirname + '/reverify.html');
     }
