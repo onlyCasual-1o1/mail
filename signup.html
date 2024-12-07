@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/signUp.css">
+</head>
+<body>
+    <nav>
+        <img src="Resources/DC.png" class="logo">
+        <ul>
+            <li><a href="logIn.php">Login</a></li>
+            <li><a href="">Help</a></li>
+            <li><a href="">About</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="signUp">
+            <section>
+                <h1>Sign up using</h1>
+                <button id="contactBtn">Contact Num</button>
+                <button id="emailBtn">Email Account</button>
+                <p><a href="google.com">Already have an account?</a></p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <a href="#" class="fa fa-facebook"></a>
+        <a href="#" class="fa fa-twitter"></a>
+        <a href="#" class="fa fa-instagram"></a>
+        <a href="#" class="fa fa-linkedin"></a>
+        <p class="infrigment">© 2024 Design Center. All rights reserved.</p>
+    </footer>
+    
+    <div class="container">
+        <div class="cover-background">
+            <div class="slider">
+                <img id="img1" src="Resources/slide4.jfif">
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Number Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="contactClose">&times;</span>
+            <h2>Sign Up with Contact Number</h2>
+            <p>Please enter your contact number to sign up.</p>
+            <input type="text" placeholder=" Enter your contact number:">
+            <button class="submit">Submit</button>
+        </div>
+    </div>
+
+    <!-- Email Account Modal -->
+     <form action="/send-otp" method="post">
+        <div id="emailModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="emailClose">&times;</span>
+                <h2>Sign Up with Email Account</h2>
+                <p>Please enter your email to sign up.</p>
+                <input type="email" id="email" name="email" placeholder=" Enter your email:" required>
+                <input type="submit" class="submit" value="Send OTP">
+            </div>
+        </div>
+     </form>
+    
+
+    <script src="javascript/index.js" defer></script>
+       
+
+</body>
+</html>
