@@ -135,3 +135,16 @@ app.get('/get-email', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
+const axios = require('axios');
+
+// Keep-alive ping for Render deployment
+setInterval(() => {
+    axios.get(http://localhost:${port})
+        .then(response => {
+            console.log("Keep-alive ping successful!");
+        })
+        .catch(error => {
+            console.log("Error during keep-alive ping:", error);
+        });
+}, 300000); // Every 5 minutes
