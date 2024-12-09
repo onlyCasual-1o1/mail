@@ -151,5 +151,4 @@ setInterval(() => {
         });
 }, 300000); // Every 5 minutes
 
-app.use(express.static(__dirname + '/signUp.css'));
-app.use(express.static(__dirname + '/DC.png'));
+app.use(express.static(__dirname + '/public'));
