@@ -1,4 +1,13 @@
 require('dotenv').config();  // Load environment variables from .env file
+const mysql = require('mysql');
+
+// Configure MySQL connection
+const db = mysql.createConnection({
+    host: '153.92.15.28' ,
+    user: 'u227551606_docadmin',
+    password: 'Doccaresservices123',
+    database: '227551606_doc_caresroom'
+});
 
 const express = require('express');
 const nodemailer = require('nodemailer');
@@ -87,7 +96,14 @@ app.post('/verify-otp', (req, res) => {
 
     // Check if the entered OTP is correct
     if (enteredOtp === currentOtp) {
-        res.redirect('https://cs-devops.com/DocCares/welcome.html');
+        // Insert email into the database
+        const sql = 'INSERT INTO patient_info (Email) VALUES (?)';
+        db.query(sql, [userEmail], (err, result) => {
+            if (err) {
+                return res.send('<h2>There was an error saving your email. Please try again.</h2>');
+            }
+            res.redirect('https://cs-devops.com/DocCares/welcome.html');
+        });
     } else {
         res.sendFile(__dirname + '/reverify.html');
     }
