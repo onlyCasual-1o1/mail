@@ -5,6 +5,7 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
+const axios = require('axios');  // Make sure axios is required correctly
 
 function generateRandomCode(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -136,11 +137,9 @@ app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
 
-const axios = require('axios');
-
 // Keep-alive ping for Render deployment
 setInterval(() => {
-    axios.get(http://localhost:${port})
+    axios.get(`http://localhost:${port}`)  // Use backticks for correct string interpolation
         .then(response => {
             console.log("Keep-alive ping successful!");
         })
