@@ -37,6 +37,7 @@ app.use(session({
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
 
 // Store OTP temporarily in memory (for demonstration purposes)
 let currentOtp = null;
@@ -151,4 +152,3 @@ setInterval(() => {
         });
 }, 300000); // Every 5 minutes
 
-app.use(express.static(__dirname + '/public'));
