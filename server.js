@@ -5,7 +5,6 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
-const axios = require('axios');  // Make sure axios is required correctly
 
 function generateRandomCode(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -112,11 +111,14 @@ app.post('/verify-otp', (req, res) => {
     }
 
     if (enteredOtp === currentOtp) {
+        // Encrypt (Base64 encode) the email
+        const encodedEmail = Buffer.from(userEmail).toString('base64');
+        
         // Store the email in the session after successful OTP verification
         req.session.userEmail = userEmail;
 
-        // Redirect to the fillup.php page without email in the URL
-        res.redirect('https://cs-devops.com/DocCares/fillup.php');
+        // Redirect to the fillup.php page with encoded email in the URL
+        res.redirect(`https://cs-devops.com/DocCares/fillup.php?email=${encodedEmail}`);
     } else {
         res.sendFile(__dirname + '/reverify.html');
     }
@@ -138,8 +140,9 @@ app.listen(port, () => {
 });
 
 // Keep-alive ping for Render deployment
+const axios = require('axios');
 setInterval(() => {
-    axios.get(`http://localhost:${port}`)  // Use backticks for correct string interpolation
+    axios.get(`http://localhost:${port}`)
         .then(response => {
             console.log("Keep-alive ping successful!");
         })
