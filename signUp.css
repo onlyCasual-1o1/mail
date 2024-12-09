@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+    /* Modal styling */
+.modal {
+    display: none; /* Hide modal by default */
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+
+    }
+
+.modal-content {
+    background-color: #222726;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: center;
+    }
+:where(input){
+    opacity: 0.5;
+    border: none;
+    width: 45%;
+    height: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+:where(.modal-content h2){
+    margin-bottom: 0px;
+}
+.submit{
+    width: 30%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+body, html{
+    margin: 0px;
+    min-width: 500px;    
+    max-height: 500px;
+    background-color: black;
+}
+.cover-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+.cover-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.cover-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.623); /* Adjust the alpha (0.5) for desired dimming */
+    z-index: 0;
+}
+.slider {
+    display: flex;
+    height: 100%; 
+    width: 100%; 
+    animation: slide 35s infinite;
+}
+
+.slider img {
+    flex: 1 0 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px; /* Add padding for spacing */
+    /* border: red 1px solid; */
+    display: flex;
+    align-items: center;
+    z-index: 10; /* Ensure it's on top of other elements */
+    overflow: hidden;
+    height: 10%;
+    }
+
+.logo {
+    height: 115px; /* Increase logo size */
+    margin-right: auto; /* Pushes the logo to the left */
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4)); /* Subtle shadow effect */
+    margin-left: 2%;
+    margin-top: 10px;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin-right: 10%; /* Remove default padding */
+    /* border: red 1px solid; */
+}
+
+li{
+    margin-left: 80px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+li:hover {
+    transform: translateY(-2px);
+    opacity: 0.7;
+}
+li a{
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+main{
+    position: absolute;
+    width: 100%;
+    top: 13%;
+    height: 87%;
+    display: grid;
+    place-items: center;
+
+}
+.signUp{
+    width: 45%; 
+    position: absolute;
+    text-align: center;
+    padding: 0px 35px 20px 0; 
+    border-radius: 15px; 
+    backdrop-filter: blur(5px); 
+    box-shadow:0px 2px 10px rgba(0, 0, 0, 0.15); 
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+
+    /* background-color: #0e1d2e; */
+}
+section{
+    display: block;
+    margin-top: 40px;
+    width: 90%;
+    height: 80%;
+    margin-left: 7%;
+}
+section h2{
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+button{
+    height: 55px;
+    width: 60%;
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    font-size: 0.98em;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(66, 66, 241);
+    transition: 0.2s;
+    color: white;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+p {
+    font-size: 12px;
+    color: white;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+button:hover{
+    transform: translateY(-2px);
+    opacity: 0.7;
+
+}p:hover {
+    opacity: 0.5;
+    transform: translateY(-2px);
+    
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10; /* Ensure it's on top of other elements */
+    overflow: hidden;
+    height: 10%;
+}
+.fa {
+    padding: 20px;
+    font-size: 25px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    opacity: 0.8;
+  }
+.fa:hover{
+    opacity: 0.7;
+}
+.infrigment{
+    margin-left: 14%;
+    opacity: 0.7;
+}
+
+
+
