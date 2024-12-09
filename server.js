@@ -1,16 +1,22 @@
 require('dotenv').config();  // Load environment variables from .env file
-const express = require('express');
 const mysql = require('mysql');
+const express = require('express');
+const session = require('express-session');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const axios = require('axios');
 
-// Create an Express application
-const app = express();
-const port = 3000;
+function generateRandomCode(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+    }
+    return result;
+}
 
+const encrypt = generateRandomCode(10);
 // Configure MySQL connection
 const db = mysql.createConnection({
     host: 'srv1415.hstgr.io',
@@ -19,21 +25,23 @@ const db = mysql.createConnection({
     database: 'u227551606_doc_caresroom'
 });
 
-// Middleware to parse form data
-app.use(bodyParser.urlencoded({ extended: true }));
-
 // Set up session middleware
+const app = express();
+const port = 3000;
 app.use(session({
-    secret: 'your-secret-key',  // Change this to a secure random string
+    secret: 'encrypt',  // Change this to a secure random string
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }  // Set `secure: true` if you're using HTTPS
 }));
 
+// Middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Store OTP temporarily in memory (for demonstration purposes)
 let currentOtp = null;
 let otpExpiration = null;
-let userEmail = null;  // Store email temporarily
+let userEmail = null; // Store email temporarily
 
 // Generate OTP
 function generateOtp() {
@@ -58,7 +66,7 @@ function sendOtpEmail(toEmail, otp) {
         from: process.env.EMAIL_USER,  // From address should be your Gmail address
         to: toEmail,                  // To address will be the user's email
         subject: 'Your OTP Code',
-        text: `Your OTP code is: ${otp}`
+        text: `Your OTP code is: ${otp}. Never share your OTP.`
     };
 
     // Send email using Nodemailer
@@ -71,9 +79,9 @@ function sendOtpEmail(toEmail, otp) {
     });
 }
 
-// Route to serve the OTP form (signup.html)
+// Route to serve the OTP form (index.html)
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/signup.html');  // Serve the signup.html page
+    res.sendFile(__dirname + '/signup.html');  // Serve the index.html page
 });
 
 // Route to handle sending OTP to the email
@@ -98,12 +106,10 @@ app.get('/verify', (req, res) => {
 app.post('/verify-otp', (req, res) => {
     const enteredOtp = req.body.otp;
 
-    // Check if OTP has expired
     if (Date.now() > otpExpiration) {
         return res.send('<h2>Your OTP has expired. Please request a new one.</h2>');
     }
 
-    // Check if the entered OTP is correct
     if (enteredOtp === currentOtp) {
         // Store the email in the session after successful OTP verification
         req.session.userEmail = userEmail;
@@ -115,14 +121,12 @@ app.post('/verify-otp', (req, res) => {
     }
 });
 
-// Endpoint to get the email from the session
+// Route to get the email stored in the session
 app.get('/get-email', (req, res) => {
-    // Check if the email exists in the session
-    if (req.session.userEmail) {
-        // Send the email in the response
-        res.json({ email: req.session.userEmail });
+    const userEmail = req.session.userEmail;
+    if (userEmail) {
+        res.json({ email: userEmail }); // Return email as JSON
     } else {
-        // If no email found, return an empty response or an error
         res.json({ email: null });
     }
 });
@@ -131,5 +135,3 @@ app.get('/get-email', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
-
-// Keep-alive ping for Render deployment
