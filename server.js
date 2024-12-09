@@ -95,15 +95,8 @@ app.post('/verify-otp', (req, res) => {
     }
 
     // Check if the entered OTP is correct
-    if (enteredOtp === currentOtp) {
-        // Insert email into the database
-        const sql = 'INSERT INTO patient_info (Email) VALUES (?)';
-        db.query(sql, [userEmail], (err, result) => {
-            if (err) {
-                return res.send('<h2>There was an error saving your email. Please try again.</h2>');
-            }
-            res.redirect('https://cs-devops.com/DocCares/welcome.html');
-        });
+     if (enteredOtp === currentOtp) {
+        res.redirect(`https://cs-devops.com/DocCares/welcome.php?email=${encodeURIComponent(userEmail)}`);
     } else {
         res.sendFile(__dirname + '/reverify.html');
     }
