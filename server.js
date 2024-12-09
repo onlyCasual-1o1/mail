@@ -141,9 +141,8 @@ app.listen(port, () => {
 });
 
 // Keep-alive ping for Render deployment
-const axios = require('axios');
 setInterval(() => {
-    axios.get(`http://localhost:${port}`)
+    axios.get(`https://your-app-name.onrender.com`)  // Use the Render URL for your app
         .then(response => {
             console.log("Keep-alive ping successful!");
         })
@@ -151,4 +150,5 @@ setInterval(() => {
             console.log("Error during keep-alive ping:", error);
         });
 }, 300000); // Every 5 minutes
+
 
