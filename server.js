@@ -133,12 +133,3 @@ app.listen(port, () => {
 });
 
 // Keep-alive ping for Render deployment
-setInterval(() => {
-    axios.get(`http://localhost:${port}`)
-        .then(response => {
-            console.log("Keep-alive ping successful!");
-        })
-        .catch(error => {
-            console.log("Error during keep-alive ping:", error);
-        });
-}, 300000); // Every 5 minutes
