@@ -68,24 +68,6 @@
     
 
     <script src="javascript/index.js" defer></script>
-    <script>
-        const check = document.getElementById("sub");
-
-        check.addEventListener("submit" function() {
-            function getUrlParameter(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
-        // Check if there's an error in the URL query string
-        const error = getUrlParameter('error');
-        if (error === 'email_exists') {
-            alert('Error: The email you entered already exists. Please use a different email.');
-            event.preventDefault();
-        }
-     })
-        
-    </script>
 
 </body>
 </html>
