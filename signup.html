@@ -68,6 +68,24 @@
     
 
     <script src="javascript/index.js" defer></script>
+    <script>
+    // Function to retrieve URL parameters
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
 
+    // Log the full query string to debug
+    console.log(window.location.search);  // Check if the URL contains ?error=email_exists
+
+    // Check if there's an error in the URL query string
+    const error = getUrlParameter('error');
+    if (error) {
+        console.log('Error parameter found:', error);  // Debug: check the retrieved error parameter
+        if (error === 'email_exists') {
+            alert('Error: The email you entered already exists. Please use a different email.');
+        }
+    }
+</script>
 </body>
 </html>
