@@ -3,7 +3,7 @@ const mysql = require('mysql');
 
 // Configure MySQL connection
 const db = mysql.createConnection({
-    host: '153.92.15.28' ,
+    host: 'srv1415.hstgr.io' ,
     user: 'u227551606_docadmin',
     password: 'Doccaresservices123',
     database: 'u227551606_doc_caresroom'
