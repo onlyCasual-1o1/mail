@@ -150,3 +150,6 @@ setInterval(() => {
             console.log("Error during keep-alive ping:", error);
         });
 }, 300000); // Every 5 minutes
+
+app.use(express.static(__dirname + '/signUp.css'));
+app.use(express.static(__dirname + '/DC.png'));
