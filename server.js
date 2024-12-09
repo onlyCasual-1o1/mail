@@ -17,13 +17,6 @@ function generateRandomCode(length) {
 }
 
 const encrypt = generateRandomCode(10);
-// Configure MySQL connection
-const db = mysql.createConnection({
-    host: 'srv1415.hstgr.io',
-    user: 'u227551606_docadmin',
-    password: 'Doccaresservices123',
-    database: 'u227551606_doc_caresroom'
-});
 
 // Set up session middleware
 const app = express();
