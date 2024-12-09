@@ -68,7 +68,18 @@
     
 
     <script src="javascript/index.js" defer></script>
-       
+    <script>
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Check if there's an error in the URL query string
+        const error = getUrlParameter('error');
+        if (error === 'email_exists') {
+            alert('Error: The email you entered already exists. Please use a different email.');
+        }
+    </script>
 
 </body>
 </html>
