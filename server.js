@@ -1,41 +1,39 @@
 require('dotenv').config();  // Load environment variables from .env file
-const mysql = require('mysql');
-
-// Configure MySQL connection
-const db = mysql.createConnection({
-    host: 'srv1415.hstgr.io' ,
-    user: 'u227551606_docadmin',
-    password: 'Doccaresservices123',
-    database: 'u227551606_doc_caresroom'
-});
-
-const session = require('express-session');
-
-// Set up session middleware
-app.use(session({
-    secret: 'U9enB3kR',  // Change this to a secure random string
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }  // Set `secure: true` if you're using HTTPS
-}));
-
-
 const express = require('express');
+const mysql = require('mysql');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const axios = require('axios');
 
 // Create an Express application
 const app = express();
 const port = 3000;
 
+// Configure MySQL connection
+const db = mysql.createConnection({
+    host: 'srv1415.hstgr.io',
+    user: 'u227551606_docadmin',
+    password: 'Doccaresservices123',
+    database: 'u227551606_doc_caresroom'
+});
+
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Set up session middleware
+app.use(session({
+    secret: 'your-secret-key',  // Change this to a secure random string
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // Set `secure: true` if you're using HTTPS
+}));
 
 // Store OTP temporarily in memory (for demonstration purposes)
 let currentOtp = null;
 let otpExpiration = null;
-let userEmail = null; // Store email temporarily
+let userEmail = null;  // Store email temporarily
 
 // Generate OTP
 function generateOtp() {
@@ -73,9 +71,9 @@ function sendOtpEmail(toEmail, otp) {
     });
 }
 
-// Route to serve the OTP form (index.html)
+// Route to serve the OTP form (signup.html)
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/signup.html');  // Serve the index.html page
+    res.sendFile(__dirname + '/signup.html');  // Serve the signup.html page
 });
 
 // Route to handle sending OTP to the email
@@ -100,10 +98,12 @@ app.get('/verify', (req, res) => {
 app.post('/verify-otp', (req, res) => {
     const enteredOtp = req.body.otp;
 
+    // Check if OTP has expired
     if (Date.now() > otpExpiration) {
         return res.send('<h2>Your OTP has expired. Please request a new one.</h2>');
     }
 
+    // Check if the entered OTP is correct
     if (enteredOtp === currentOtp) {
         // Store the email in the session after successful OTP verification
         req.session.userEmail = userEmail;
@@ -114,11 +114,25 @@ app.post('/verify-otp', (req, res) => {
         res.sendFile(__dirname + '/reverify.html');
     }
 });
+
+// Endpoint to get the email from the session
+app.get('/get-email', (req, res) => {
+    // Check if the email exists in the session
+    if (req.session.userEmail) {
+        // Send the email in the response
+        res.json({ email: req.session.userEmail });
+    } else {
+        // If no email found, return an empty response or an error
+        res.json({ email: null });
+    }
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
 
+// Keep-alive ping for Render deployment
 setInterval(() => {
     axios.get(`http://localhost:${port}`)
         .then(response => {
@@ -127,4 +141,4 @@ setInterval(() => {
         .catch(error => {
             console.log("Error during keep-alive ping:", error);
         });
-}, 300000);
+}, 300000); // Every 5 minutes
