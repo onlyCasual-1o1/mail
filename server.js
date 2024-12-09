@@ -3,10 +3,10 @@ const mysql = require('mysql');
 
 // Configure MySQL connection
 const db = mysql.createConnection({
-    host: 'srv1415.hstgr.io' ,
+    host: '153.92.15.28' ,
     user: 'u227551606_docadmin',
     password: 'Doccaresservices123',
-    database: '227551606_doc_caresroom'
+    database: 'u227551606_doc_caresroom'
 });
 
 const express = require('express');
