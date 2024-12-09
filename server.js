@@ -9,6 +9,17 @@ const db = mysql.createConnection({
     database: 'u227551606_doc_caresroom'
 });
 
+const session = require('express-session');
+
+// Set up session middleware
+app.use(session({
+    secret: 'U9enB3kR',  // Change this to a secure random string
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // Set `secure: true` if you're using HTTPS
+}));
+
+
 const express = require('express');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
@@ -89,19 +100,20 @@ app.get('/verify', (req, res) => {
 app.post('/verify-otp', (req, res) => {
     const enteredOtp = req.body.otp;
 
-    // Check if OTP has expired
     if (Date.now() > otpExpiration) {
         return res.send('<h2>Your OTP has expired. Please request a new one.</h2>');
     }
 
-    // Check if the entered OTP is correct
-     if (enteredOtp === currentOtp) {
-        res.redirect(`https://cs-devops.com/DocCares/fillup.php?email=${encodeURIComponent(userEmail)}`);
+    if (enteredOtp === currentOtp) {
+        // Store the email in the session after successful OTP verification
+        req.session.userEmail = userEmail;
+
+        // Redirect to the fillup.php page without email in the URL
+        res.redirect('https://cs-devops.com/DocCares/fillup.php');
     } else {
         res.sendFile(__dirname + '/reverify.html');
     }
 });
-
 // Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
