@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="/verify.css">
 </head>
 <body>
-    <h1>Invalid OTP. Please Try Again</h1>
-    <form action="/verify-otp" method="post">
-        <label for="otp">Enter OTP:</label><br>
-        <input type="text" id="otp" name="otp" required><br><br>
-        <input type="submit" value="Verify OTP">
+    <header>
+        <div class="logo">MyPortal</div>
+        <nav>
+            <a href="#">Help</a>
+            <a href="#">About</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <!-- Display error message conditionally -->
+            <h1 id="error-message" style="display: none; color: red;">Invalid OTP. Please try again</h1>
+
+            <form action="/verify-otp" method="post">
+                <label for="otp">Enter OTP:</label><br>
+                <input type="text" id="otp" name="otp" placeholder="Enter your OTP" required><br><br>
+                <input type="submit" value="Verify OTP">
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>Providing care with compassion and excellence.</p>
+        <p>&copy; 2024 Healthcare Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Example condition: dynamically show the error
+        const hasError = false; // Replace with your server-side logic (e.g., PHP or backend API)
+        if (hasError) {
+            document.getElementById("error-message").style.display = "block";
+        }
+    </script>
 </body>
 </html>
